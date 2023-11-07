@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question and Answer Form</title>
+</head>
+<body>
+    <h1>Question and Answer Form</h1>
+
+    <!-- Input boxes for Question and Answer -->
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Example label</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Another label</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+      </div>
+
+    <!-- Submit button -->
+    <button onclick="saveData()">Submit</button>
+
+    <!-- Space to display the output (single number) -->
+    <div id="output" style="font-size: 24px;"></div>
+
+    <script>
+        function saveData() {
+            // Get the values of the question and answer input boxes
+            var question = document.getElementById("question").value;
+            var answer = document.getElementById("answer").value;
+
+            // You can process and save the question and answer data here
+            // For now, let's just display a random number as an example
+            var randomNumber = Math.floor(Math.random() * 100);
+
+            // Display the output
+            document.getElementById("output").innerHTML = "Output: " + randomNumber;
+        }
+    </script>
+</body>
+</html>
