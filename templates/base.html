@@ -3,62 +3,75 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Question and Answer Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: cyan;
-        }         
-</style>
+    <title>Q&A Evaluation</title>
+    <link href="../static/base.css" rel="stylesheet">
 </head>
 <body>
-<br><br><br><br><br><br><br>
-<div class="container">
-    <h1><center>Q&A Evaluation</center></h1>
-    <br>
-    <h4><center>> Where Knowledge's Assessed</center></h3>
-    <br><br>
-    <!-- Input boxes for Question and Answer -->
-    <div class="mb-3">
-        <ion-icon name="help-outline"></ion-icon>
-        <label for="formGroupExampleInput" class="form-label"><strong>Question</strong></label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex: When did India Gain Independence?">
-    </div>
-    <br>
-    <div class="mb-3">
-        <ion-icon name="search-outline"></ion-icon>        
-        <label for="formGroupExampleInput2" class="form-label"><strong>Answer</strong></label>
-        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ex: India Gained Independence on 15 Aug, 1947.">
-    </div>
-    <br><br><br>
-    <!-- Submit button -->
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-dark" type="button" onclick="saveData()">Submit</button>
-    </div>
+<section>
+    <div class="container">
+        <div class="form-value">
+            <form action="">
+                <h2>Q&A Evaluation</h2>
+                <br>
+                <h4><center>Where Knowledge's Assessed</center></h4>
+                <br><br>
+                <!-- Input boxes for Question and Answer -->
+                <div class="inputbox">
+                    <ion-icon name="help-outline"></ion-icon>
+                    <input type="question" required>
+                    <label for="question">Question</label>
+                </div>
 
-    <!-- Space to display the output (single number) -->
-        <div id="output" style="font-size: 24px;"></div>
+                <div class="inputbox">
+                    <ion-icon name="search-outline"></ion-icon>        
+                    <input type="answer" required>
+                    <label for="answer">Answer</label>
+                </div><br>
+                <!-- Submit button -->
+                <div class="button">
+                    <button class="btn btn-dark" type="button" onclick="saveData()">Submit</button>
+                </div>
 
+                <!-- Space to display the output (single number) -->
+                <div id="output" style="font-size: 24px;"></div>
+            </form>
+        </div>
+    </div>
+    <!-- Include the rendered content from your backend here -->
+</section>
+
+<div class="content">
+    {% block content %} {% endblock %}
 </div>
-    
 
-    <script>
-        function saveData() {
-            // Get the values of the question and answer input boxes
-            var question = document.getElementById("question").value;
-            var answer = document.getElementById("answer").value;
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    function saveData() {
+        // Get the question and answer from the input fields
+        var question = document.querySelector('input[type="question"]').value;
+        var answer = document.querySelector('input[type="answer"]').value;
 
-            // You can process and save the question and answer data here
-            // For now, let's just display a random number as an example
-            var randomNumber = Math.floor(Math.random() * 100);
+        // Send a request to the Flask backend (or your backend of choice)
+        fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({question: question, answer: answer})
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response, you can display it in the 'output' div
+            document.getElementById("output").innerHTML = "Response from Flask: " + JSON.stringify(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
-            // Display the output
-            document.getElementById("output").innerHTML = "Output: " + randomNumber;
-        }
-    </script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        // Redirect to the '/submit' route
+        window.location.href = '/submit';
+    }
+</script>
 </body>
 </html>
