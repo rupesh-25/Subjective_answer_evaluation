@@ -1,77 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Q&A Evaluation</title>
-    <link href="../static/base.css" rel="stylesheet">
+    <link href="../templates/base.css" rel="stylesheet">
 </head>
 <body>
-<section>
-    <div class="container">
-        <div class="form-value">
-            <form action="">
-                <h2>Q&A Evaluation</h2>
-                <br>
-                <h4><center>Where Knowledge's Assessed</center></h4>
-                <br><br>
-                <!-- Input boxes for Question and Answer -->
-                <div class="inputbox">
-                    <ion-icon name="help-outline"></ion-icon>
-                    <input type="question" required>
-                    <label for="question">Question</label>
-                </div>
+    <section>
+        <div class="container">
+            <div class="form-value">
+                <form action="">
+                    <h2>Q&A Evaluation</h2>
+                    <br>
+                    <h4><center>Where Knowledge's Assessed</center></h4>
+                    <br><br>
+                    <!-- Input boxes for Question and Answer -->
+                    <div class="inputbox">
+                        <ion-icon name="help-outline"></ion-icon>
+                        <input type="text" id="formGroupExampleInput" required>
+                        <label for="formGroupExampleInput">Question</label>
+                    </div>
 
-                <div class="inputbox">
-                    <ion-icon name="search-outline"></ion-icon>        
-                    <input type="answer" required>
-                    <label for="answer">Answer</label>
-                </div><br>
-                <!-- Submit button -->
-                <div class="button">
-                    <button class="btn btn-dark" type="button" onclick="saveData()">Submit</button>
-                </div>
+                    <div class="inputbox">
+                        <ion-icon name="search-outline"></ion-icon>        
+                        <input type="text" id="formGroupExampleInput2" required>
+                        <label for="formGroupExampleInput2">Answer</label>
+                    </div><br>
+                    <!-- Submit button -->
 
-                <!-- Space to display the output (single number) -->
-                <div id="output" style="font-size: 24px;"></div>
-            </form>
+                    <div class="button">
+                        <button class="btn btn-dark" type="button" onclick="saveData()">Submit</button>
+                    </div>
+
+                    <!-- Space to display the output (single number) -->
+                    <div id="output" style="font-size: 24px;"></div>
+                </form>
+            </div>
         </div>
+    </section>
+
+    <!-- A section to see outputs -->
+    <div class="content">
+        {% block content %} 
+        {% endblock %}
     </div>
-    <!-- Include the rendered content from your backend here -->
-</section>
 
-<div class="content">
-    {% block content %} {% endblock %}
-</div>
+    <script>
+        function saveData() {
+            // Get the question and answer from the input fields
+            var question = document.getElementById("formGroupExampleInput").value;
+            var answer = document.getElementById("formGroupExampleInput2").value;
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script>
-    function saveData() {
-        // Get the question and answer from the input fields
-        var question = document.querySelector('input[type="question"]').value;
-        var answer = document.querySelector('input[type="answer"]').value;
+            // Send a request to the Flask backend
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({question: question, answer: answer})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response, you can display it in the 'output' div
+                document.getElementById("output").innerHTML = "Response from Flask: " + JSON.stringify(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
-        // Send a request to the Flask backend (or your backend of choice)
-        fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({question: question, answer: answer})
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response, you can display it in the 'output' div
-            document.getElementById("output").innerHTML = "Response from Flask: " + JSON.stringify(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-        // Redirect to the '/submit' route
-        window.location.href = '/submit';
-    }
-</script>
+            // Redirect to the '/submit' route
+            window.location.href = '/submit';
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
