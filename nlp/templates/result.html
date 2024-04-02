@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/bg1.jpeg');
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            border:2px solid grey;
+        }
+        .result-box {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width:40%;
+            height: 30vh;
+           
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size:300%;
+        }
+        p {
+            margin: 0;
+            color: #555;
+            font-size:230%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-box">
+            <h1>Marks Obtained</h1>
+            <div id="marks">
+                {% if output %}
+                    <p>Marks: {{ output }}</p>
+                {% else %}
+                    <p>No marks available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

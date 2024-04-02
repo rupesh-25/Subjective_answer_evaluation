@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/48a1cfc20b.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <!--- Style File connection-->
+    <link rel="stylesheet" href="style.css">
+
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon_io/site.webmanifest">
+
+    <!-- title -->
+    <title>CheckMyAnswer</title>
+
+    <!-- style -->
+    <style>
+        body {
+            background-image: url('/static/bg1.jpeg');
+        }
+        /* Your CSS styles here */
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <hr style="color:white;width:100%;border: 2px solid lightgreen;">
+        <!-- Question & Model Answer -->
+        <div class="row">
+            <!-- Upload question paper -->
+            <div class="col">
+                <div class="login-wrap">
+                    <div class="login-html">
+                        <form action="{% url 'process' %}" method="POST" enctype="multipart/form-data">
+                            <!-- Your form content here -->
+                            {% csrf_token %} 
+                            <!-- Upload question paper -->
+                            <div class="quePdf">
+                                <div class="mb-3">
+                                    <label for="QuestionPaper" class="form-label"
+                                        style="font-size: 150%;"> Upload question paper</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Question Paper" class="form-label"
+                                        style="font-size: 120%;">Question Paper :</label>
+                                    <br>
+                                    <br>
+                                    <input type="file" id="txtFile1" name="question_paper" accept=".txt">
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+
+                            <!-- Upload Student Answer paper-->
+                            <div class="ansPdf">
+                                <div class="mb-3">
+                                    <label for="QuestionPaper" class="form-label"
+                                        style="font-size: 150%;"> Upload Student Answer paper</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="student Answer" class="form-label"
+                                        style="font-size: 120%;">Student Answer :</label>
+                                    <br>
+                                    <br>
+                                    <input type="file" id="txtFile2" name="student_answer" accept=".txt">
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <!-- buttons for Reset and Submit -->
+                            <div class="row">
+                                <div class="col d-grid">
+                                    <input class="btn btn-outline-secondary" type="reset" value="reset">
+                                </div>
+
+                                <div class="col d-grid">
+                                    <!-- <input class="btn btn-outline-warning" type="submit" value="Submit"> -->
+                                    <button type="submit" class="btn btn-outline-warning" id="submit_msg"
+                                        value="upload">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script>
+        // Your JavaScript code here
+    </script>
+</body>
+
+</html>
