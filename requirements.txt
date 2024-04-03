@@ -1,0 +1,1 @@
+openai langchain langchain-community langchain-openai faiss-cpu pdfminer.six
