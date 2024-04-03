@@ -1,1 +1,1 @@
-openai langchain langchain-community langchain-openai faiss-cpu pdfminer.six
+openai langchain langchain-community langchain-openai faiss-cpu pdfminer.six langchain-text-splitters

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from openai import OpenAI
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_community.vectorstores import FAISS
@@ -35,10 +35,12 @@ def process(request):
         # Handle submission of other documents
         question_file = request.FILES['question_paper']
         answer_file = request.FILES['student_answer']
-        # Read the content of the question paper file
-        question = question_file.read().decode('utf-8')
-        # Read the content of the student answer file
-        student_answer = answer_file.read().decode('utf-8')
+        # # Read the content of the question paper file
+        # question = question_file.read().decode('utf-8')
+        # # Read the content of the student answer file
+        # student_answer = answer_file.read().decode('utf-8')
+
+        #Gotta have to write the OCR code here
 
         #Fetch the content from the textbook
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small",openai_api_key='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')
