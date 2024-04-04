@@ -1,1 +1,1 @@
-openai langchain langchain-community langchain-openai faiss-cpu pdfminer.six langchain-text-splitters
+openai langchain langchain-community langchain-openai faiss-cpu pdfminer.six langchain-text-splitters google-cloud-documentai python-dotenv
