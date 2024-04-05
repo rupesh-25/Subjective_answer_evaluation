@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from openai import OpenAI
-from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_community.vectorstores import FAISS
@@ -14,14 +13,15 @@ import os
 from dotenv import load_dotenv
 from google.api_core.client_options import ClientOptions
 from google.cloud import documentai 
+from langchain_openai import ChatOpenAI
 
 #Load the Api keys as environment variables
 load_dotenv()
 
 #Obtain the output
-temp_template="So you are a teacher evaluating students answers and giving it a score. The question carries 10 marks. You are having a syllabus sheet which you refer for assigning marks. So here is the syllabus sheet-{docs}. So here is the question-{question} and here is the corresponding students answer-{student_answer}. Just return score and nothing else."
+temp_template="So you are a teacher evaluating students answers and giving it a score. The question carries 10 marks. You are having a syllabus sheet which you refer for assigning marks. So here is the syllabus sheet-{docs}. So here is the question-{question} and here is the corresponding students answer-{student_answer}. Evaluate considering a bunch of points typically looked by human teachers such as the depth of the answer. Just return score and nothing else. Make sure your response format is \"x/10\" is x is the assigned score"
 def get_conversational_chain(iv,template):
-    llm=OpenAI(temperature=0.5)
+    llm=ChatOpenAI(model="gpt-4")
     prompt_template=PromptTemplate(
         input_variables=iv,
         template=template
@@ -30,7 +30,7 @@ def get_conversational_chain(iv,template):
     return name_chain
 
 #Google Document AI stuff
-credential_path = "C:\Users\DELL\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
+credential_path = r"C:\Users\DELL\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 project_id = "fluted-nation-419211"
@@ -165,16 +165,28 @@ def process(request):
             processor_version_id=processor_version_id
             )
         
+        #Preprocess questions
+        questions_temp="Here is some text fetched with OCR-\"{questions}\". The OCR gets things wrong, your job is to correct and realign them. After doing that, return those questions. Make sure individual questions are separated by \"Q-\" so that further the split function run on that properly segments them. Make sure you dont add any other text in your response as that would be used for further downstream tasks"
+        q_chain=get_conversational_chain(['questions'], questions_temp)
+        questions=q_chain(questions, return_only_outputs=True)
+        questions=questions['text']
+
         #Segmenting those questions and answers
-        questions=questions.split("Q")
+        questions=questions.split("Q-")
+        questions.pop(0)
         answers=answers.split("Ans")
         answers.pop(0)
 
         #Preprocess answers to bring them in order.
-        correction_template="Here is some text-{answer}. We have got it from OCR. It is out of order. So bring that in order, respond with just the corrected text and nothing else "
+        correction_template="Here is some text-{answer}. We have got it from OCR. It is out of order. So bring that in order, respond with just the corrected text. Make sure you dont add any other text in your response as that would be used for further downstream tasks "
         correction_chain=get_conversational_chain(['answer'],correction_template)
         for idx in range(len(answers)):
             answers[idx]=correction_chain(answers[idx], return_only_outputs=True)
+            answers[idx]=answers[idx]['text']
+        
+        # #For the sake of debugging
+        # print(f"Here are the questions-{questions}")
+        # print(f"Here are the answers-{answers}")
 
         #Load the vector DB
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
