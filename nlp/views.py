@@ -30,7 +30,7 @@ def get_conversational_chain(iv,template):
     return name_chain
 
 #Google Document AI stuff
-credential_path = r"C:\Users\yashp\OneDrive\Desktop\BE project\BE\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
+credential_path = r"C:\Users\DELL\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 project_id = "fluted-nation-419211"
@@ -104,7 +104,8 @@ def create_vector_db(request):
     if request.method == 'POST':
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
         textbook=request.FILES.get('pdfFile')
-        file_path = r"C:\Users\yashp\OneDrive\Desktop\BE project\BE\Subjective_answer_evaluation\nlp\static" + textbook.name
+        save_dir = os.path.join(settings.BASE_DIR, 'nlp//static//')
+        file_path = save_dir + textbook.name
         
         # Write the file to the specified location
         with open(file_path, 'wb+') as destination:
@@ -184,9 +185,9 @@ def process(request):
             answers[idx]=correction_chain(answers[idx], return_only_outputs=True)
             answers[idx]=answers[idx]['text']
         
-        #For the sake of debugging
-        print(f"Here are the questions-{questions}")
-        print(f"Here are the answers-{answers}")
+        # #For the sake of debugging
+        # print(f"Here are the questions-{questions}")
+        # print(f"Here are the answers-{answers}")
 
         #Load the vector DB
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
