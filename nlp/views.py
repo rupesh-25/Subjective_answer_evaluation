@@ -195,11 +195,16 @@ def process(request):
 
         reo=re.compile("(\\d+)/10")
         marks=[]
+        context={}
         evaluation_chain=get_conversational_chain(['question','docs','student_answer'],temp_template)
         for question,student_answer in zip(questions,answers):
             docs = faiss_index.similarity_search(question,k=2)
             generated_answer=evaluation_chain.run(question=question, student_answer=student_answer, docs=docs, return_only_outputs=True)
             mo=reo.search(generated_answer)
             marks.append(mo[0])
+            context[question]=mo[0]
 
-    return render(request, 'result.html', {"output": marks})
+    return render(request, 'result.html',  {'context': context})
+
+
+

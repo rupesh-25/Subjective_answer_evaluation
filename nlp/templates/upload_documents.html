@@ -47,6 +47,7 @@
         }
         .logo {
             padding-left: 5%;
+            font-size: 2em;
             font-weight: 700;
             line-height: 150%;
             text-transform: uppercase;
@@ -63,6 +64,7 @@
             box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
              0 17px 50px 0 rgba(0, 0, 0, 0.19);
             box-shadow: 0 0 10px rgb(255, 255, 255);
+            border-radius:10px;
         }
         .login-html{
             width: 100%;
@@ -73,7 +75,8 @@
                     background: rgb(60, 60, 60);
                     background: rgba(60, 60, 60, 0.7);
                     color: #fff;
-}
+                    border-radius:10px;
+                    }
 #pdfFile1,#pdfFile2{
 	font-size: 16px;
 	background: #9da19f;
@@ -94,9 +97,19 @@
 ::-webkit-file-upload-button:hover{
 	background: #438a5e;
 }
-
+.btn1{
+    background:none;
+    color:white;
+    border:none;
+    border-color:white;
+    border-radius:5px;
+}
+.btn1:hover{
+    background:red;
+}
     .btn{
         color:rgb(255, 255, 255);
+        border:none;
         border-color:white;
     }
     </style>
@@ -142,7 +155,8 @@
                                 </div>
                             </div>
                             <br>
-                            <hr>
+                            <hr style=" border-top: 3px solid white;margin:1%;">
+                            <br>
 
                             <!-- Upload Student Answer paper-->
                             <div class="ansPdf">
@@ -159,11 +173,11 @@
                                 </div>
                             </div>
                             <br>
-                            <hr>
+                            <hr style=" border-top: 3px solid white; margin:3%;">
                             <!-- buttons for Reset and Submit -->
                             <div class="row">
                                 <div class="col d-grid">
-                                    <input class="btn btn-outline-secondary" type="reset" value="Delete">
+                                    <input class="btn1 btn-outline-secondary" type="reset" value="Delete">
                                 </div>
 
                                 <div class="col d-grid">
