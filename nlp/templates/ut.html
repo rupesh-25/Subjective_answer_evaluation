@@ -4,12 +4,13 @@
     <meta charset="UTF-8"> 
     <title>MasterGrad</title>
     <link rel="stylesheet" href="/static/style.css">
+    
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <h5>__Subjective Answer Evaluation__</h5>
+                <h6>Subjective Answer Evaluation</h6>
             </div>
             <div class="bar">
                 <div class="bar-1"></div>
@@ -21,7 +22,7 @@
     <div class="banner">
         <div class="wrapper">
             <div class="content">
-                <h2>Upload Your Context PDF</h2>
+                <h2><b>Upload Your Context PDF<b></h2>
                 <br>
                 <h3><b>Easy, pleasant and efficient evaluation </b></h3>
                 <br>
@@ -30,12 +31,10 @@
                         {% csrf_token %}
                         <label for="pdfFile3" style="font-size: 120%;"></label>
                         <br>
-                        <br>
                         <input type="file" id="pdfFile3" name="pdfFile" name="reference_paper" accept="application/pdf">
                         <br>
-                        <div class="btn">
+                        <br>  
                             <button type="submit" class="btn btn-outline-warning" id="submit_msg"><b>Upload</b></button>
-                        </div>
                     </form>
                 </div>                               
             </div>

@@ -16,8 +16,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 
-    <!--- Style File connection-->
-    <link rel="stylesheet" href="style.css">
 
 
     <!-- Favicons -->
@@ -32,9 +30,27 @@
     <!-- style -->
     <style>
         body {
-            background-image: url('1.jpg');
+            background-image: url('/static/1.jpg');
             background-size: cover;
 	        background-position: center;
+        }
+        nav {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            /* justify-content: space-around; */
+            align-items: center;
+            min-height: 10vh;
+            background: black;
+        }
+        .logo {
+            padding-left: 5%;
+            font-weight: 700;
+            line-height: 150%;
+            text-transform: uppercase;
+            color: #ffffff;
         }
         /* Your CSS styles here */
         .login-wrap{
@@ -53,20 +69,53 @@
                     height: 100%;
                     position: absolute;
                     padding: 30px 70px 50px 70px;
-                    background: whitesmoke;
+                    background: whitesmoke;
                     background: rgb(60, 60, 60);
                     background: rgba(60, 60, 60, 0.7);
                     color: #fff;
 }
+#pdfFile1,#pdfFile2{
+	font-size: 16px;
+	background: #9da19f;
+	border-radius: 50px;
+	box-shadow: 3px 3px 5px black;
+	width: 350px;
+	outline:none;
+}
+::-webkit-file-upload-button{
+	color:white;
+	background:black;
+	padding:20px;
+	border:none;
+	border-radius: 50px;
+	box-shadow: 1px 0 1px 1px black;
+	outline: none;
+}
+::-webkit-file-upload-button:hover{
+	background: #438a5e;
+}
+
     .btn{
         color:rgb(255, 255, 255);
-        border-color:#ffc107;
+        border-color:white;
     }
     </style>
 
 </head>
 
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h3 font='Poppins'>Subjective Answer Evaluation</h3>
+            </div>
+            <div class="bar">
+                <div class="bar-1"></div>
+                <div class="bar-2"></div>
+                <div class="bar-3"></div>
+            </div>
+        </nav>
+    </header>
     <div class="container text">
         <br><br><br>
         <!-- Question & Model Answer -->
@@ -114,7 +163,7 @@
                             <!-- buttons for Reset and Submit -->
                             <div class="row">
                                 <div class="col d-grid">
-                                    <input class="btn btn-outline-secondary" type="reset" value="reset">
+                                    <input class="btn btn-outline-secondary" type="reset" value="Delete">
                                 </div>
 
                                 <div class="col d-grid">
