@@ -21,7 +21,7 @@ load_dotenv()
 #Obtain the output
 temp_template="So you are a teacher evaluating students answers and giving it a score. The question carries 10 marks. You are having a syllabus sheet which you refer for assigning marks. So here is the syllabus sheet-{docs}. So here is the question-{question} and here is the corresponding students answer-{student_answer}. Evaluate considering a bunch of points typically looked by human teachers such as the depth of the answer. Just return score and nothing else. Make sure your response format is \"x/10\" is x is the assigned score"
 def get_conversational_chain(iv,template):
-    llm=ChatOpenAI(model="gpt-4")
+    llm=ChatOpenAI()
     prompt_template=PromptTemplate(
         input_variables=iv,
         template=template
@@ -30,7 +30,7 @@ def get_conversational_chain(iv,template):
     return name_chain
 
 #Google Document AI stuff
-credential_path = r"C:\Users\DELL\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
+credential_path = r"C:\Users\yashp\OneDrive\Desktop\BE project\BE\Subjective_answer_evaluation\fluted-nation-419211-afb27e726842.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 project_id = "fluted-nation-419211"
@@ -104,7 +104,7 @@ def create_vector_db(request):
     if request.method == 'POST':
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
         textbook=request.FILES.get('pdfFile')
-        file_path = "C:\\Users\\DELL\\Subjective_answer_evaluation\\nlp\\static\\" + textbook.name
+        file_path = r"C:\Users\yashp\OneDrive\Desktop\BE project\BE\Subjective_answer_evaluation\nlp\static" + textbook.name
         
         # Write the file to the specified location
         with open(file_path, 'wb+') as destination:
@@ -192,7 +192,7 @@ def process(request):
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
         faiss_index=FAISS.load_local("New_Vector_Database1",embeddings,allow_dangerous_deserialization=True)
 
-        reo=re.compile(f"(\d+)/10")
+        reo=re.compile("(\\d+)/10")
         marks=[]
         evaluation_chain=get_conversational_chain(['question','docs','student_answer'],temp_template)
         for question,student_answer in zip(questions,answers):

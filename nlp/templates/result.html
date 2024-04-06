@@ -43,9 +43,42 @@
             color: #efefef;
             font-size:230%;
         }
+        nav {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            /* justify-content: space-around; */
+            align-items: center;
+            min-height: 10vh;
+            background: black;
+        }
+        .logo {
+            padding-left: 5%;
+            font-size: 2em;
+            /* font-family: Lato; */
+            font-family: 'Poppins';
+            font-weight: 700;
+            line-height: 150%;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h6>Subjective Answer Evaluation</h6>
+            </div>
+            <div class="bar">
+                <div class="bar-1"></div>
+                <div class="bar-2"></div>
+                <div class="bar-3"></div>
+            </div>
+        </nav>
+    </header>
     <div class="container">
         <div class="result-box">
             <h1>Marks Obtained</h1>
