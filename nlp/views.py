@@ -124,7 +124,7 @@ def process(request):
         question_file = request.FILES['question_paper']
         answer_file = request.FILES['student_answer']
 
-        save_dir = os.path.join(settings.BASE_DIR, 'static')
+        save_dir = os.path.join(settings.BASE_DIR, 'nlp//static')
         
         # Create the directory if it doesn't exist
         if not os.path.exists(save_dir):
@@ -184,9 +184,9 @@ def process(request):
             answers[idx]=correction_chain(answers[idx], return_only_outputs=True)
             answers[idx]=answers[idx]['text']
         
-        # #For the sake of debugging
-        # print(f"Here are the questions-{questions}")
-        # print(f"Here are the answers-{answers}")
+        #For the sake of debugging
+        print(f"Here are the questions-{questions}")
+        print(f"Here are the answers-{answers}")
 
         #Load the vector DB
         embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
